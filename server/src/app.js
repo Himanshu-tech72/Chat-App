@@ -22,7 +22,10 @@ const io = new Server(httpServer, {
   },
 });
 
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 app.get('/', (req, res) => {
     res.send('Namaste');
