@@ -11,7 +11,7 @@ const httpServer = createServer(app);
 
 const allowedOrigins = [
   'http://localhost:5173',              // for local dev
-  'https://chat-app-git-main-himanshu-dubeys-projects-de07467d.vercel.app/'    // your deployed frontend
+  'https://vercel.com/himanshu-dubeys-projects-de07467d/chat-app'    // your deployed frontend
 ];
 
 const io = new Server(httpServer, {
