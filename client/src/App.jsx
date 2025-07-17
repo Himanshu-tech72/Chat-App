@@ -5,10 +5,11 @@ import { Container, Typography, TextField, Button } from '@mui/material';
 function App() {
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState([]);
-  const [username, setUsername] = useState("");
-  const [isUsernameSet, setIsUsernameSet] = useState(false);
+  // const [username, setUsername] = useState("");
+  // const [isUsernameSet, setIsUsernameSet] = useState(false);
 
-  const socket = io('http://localhost:3000');
+  const socket = io('https://your-backend.onrender.com');
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
