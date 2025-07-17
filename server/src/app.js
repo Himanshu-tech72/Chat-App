@@ -1,50 +1,43 @@
+// server.js  (runs on Render)
 import express from 'express';
-import { createServer } from "http";
-import {Server} from "socket.io";
-import cors from "cors";
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import cors from 'cors';
 
-const port = 3000;
+const port = process.env.PORT || 3000;   // Render sets PORT automatically
 
 const app = express();
 const httpServer = createServer(app);
 
-
-const allowedOrigins = [
-  'http://localhost:5173',              // for local dev
-  'https://chat-app-4i26.vercel.app/'    // your deployed frontend
-];
-
+// ----- Socket.IO CORS -----
 const io = new Server(httpServer, {
   cors: {
-    origin: allowedOrigins,
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
+    origin: 'https://chat-app-4i26.vercel.app', // ✅ exact, trimmed URL
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
 });
 
+// ----- Express CORS (optional, only if you hit REST endpoints too) -----
 app.use(cors({
-  origin: allowedOrigins,
+  origin: 'https://chat-app-4i26.vercel.app',
   credentials: true
 }));
 
-app.get('/', (req, res) => {
-    res.send('Namaste');
+app.get('/', (_, res) => res.send('Namaste'));
+
+io.on('connection', socket => {
+  console.log('A new user connected →', socket.id);
+
+  socket.on('message', data => {
+    io.emit('message', data);          // broadcast to every client
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected →', socket.id);
+  });
 });
 
-io.on("connection", (socket) => {
-  console.log("A new user connected");
-  console.log("Id", socket.id)           // Socket id for server-side
-                                         // Backend me directly emit nahi karte listen karne ke baad emit karte hai
-  socket.on("disconnect", () => {          
-    console.log("User disconnected", socket.id);    // Event listner for user disconnect triggerd when return 
-  });     
-// keyword of useEffect is runned in frontend.
-
-socket.on("message", (data) => {
-       io.emit("message", data); // Emit message to all connected clients
-})
-});
-
-httpServer.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-})
+httpServer.listen(port, () =>
+  console.log(`Socket.IO server listening on port ${port}`)
+);
