@@ -9,8 +9,26 @@ function App() {
 
   useEffect(() => {
     // Create socket connection once
+    console.log("Attempting to connect to socket server at /api");
     socketRef.current = io('/api', {
       withCredentials: true
+    });
+
+    socketRef.current.on("connect_error", (err) => {
+      console.error("Socket connection error:", err);
+      if (err.message) {
+      console.error("Error message:", err.message);
+      }
+      if (err.description) {
+      console.error("Error description:", err.description);
+      }
+      if (err.context) {
+      console.error("Error context:", err.context);
+      }
+    });
+
+    socketRef.current.on("disconnect", (reason) => {
+      console.warn("Socket disconnected. Reason:", reason);
     });
 
     // Log connection
