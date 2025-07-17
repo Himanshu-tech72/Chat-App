@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     // Create socket connection once
     console.log("Attempting to connect to socket server at /api");
-    socketRef.current = io('/api', {
+     socketRef.current = io('https://chat-applicaton-3.onrender.com', {
       withCredentials: true
     });
 
