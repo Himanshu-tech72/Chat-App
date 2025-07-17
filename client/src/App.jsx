@@ -8,7 +8,7 @@ function App() {
   // const [username, setUsername] = useState("");
   // const [isUsernameSet, setIsUsernameSet] = useState(false);
 
-  const socket = io('https://your-backend.onrender.com');
+  const socket = io('https://chat-applicaton-3.onrender.com/');
 
 
   const handleSubmit = (e) => {
