@@ -1,13 +1,13 @@
 {
+  "main": "app.js",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "init": "^0.1.2",
-    "socket.io": "^4.8.1",
-    "main": "app.js"
+    "socket.io": "^4.8.1"
   },
   "scripts": {
-      "start": "node app.js",
+      "start": "node src/app.js",
       "dev": "nodemon app.js"
     },
   "devDependencies": {
