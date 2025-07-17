@@ -4,6 +4,10 @@ import { Container, Typography, TextField, Button } from '@mui/material';
 
 function App() {
   const [message, setMessage] = useState("")
+  const [messages, setMessages] = useState([]);
+  const [username, setUsername] = useState("");
+  const [isUsernameSet, setIsUsernameSet] = useState(false);
+
   const socket = io('http://localhost:3000');
 
   const handleSubmit = (e) => {
@@ -33,12 +37,24 @@ function App() {
         <Typography variant="h1" component="div" gutterBottom>
           Chat Application
         </Typography>
-
-        <form onSubmit={handleSubmit}> 
+         <form onSubmit={handleSubmit}> 
           <TextField value={message} onChange={(e) => setMessage(e.target.value)}></TextField>
           <Button type="submit" variant="contained" color="primary"> Send</Button>
 
         </form>
+        <div style={{
+        height: "300px",
+        overflowY: "auto",
+        border: "1px solid #ccc",
+        padding: "10px",
+        marginBottom: "20px",
+        borderRadius: "5px",
+        background: "white"
+      }}>
+        {messages.map((msg, index) => (
+          <Typography key={index} variant="body1">{msg}</Typography>
+        ))}
+      </div>
       </Container>
   )
   
